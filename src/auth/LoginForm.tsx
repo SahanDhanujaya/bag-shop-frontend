@@ -21,7 +21,7 @@ const Login = () => {
       .then(async (res: any) => {
         if (res.status === 200) {
           const data = await res.json();
-          document.cookie = `token=${data?.accessToken}; path=/; max-age=2592000; SameSite=Strict; Secure`;
+          document.cookie = `token=${data?.accessToken}; path=/; max-age=2592000; SameSite=None; Secure`;
           await checkAuth();
           navigate("/");
         }

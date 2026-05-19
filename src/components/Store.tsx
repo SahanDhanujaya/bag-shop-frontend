@@ -99,7 +99,7 @@ export default function Store({
                           rounded-2xl sm:rounded-3xl md:rounded-[3rem] lg:rounded-[4rem]
                           overflow-hidden group shadow-xl">
         <img
-          src="/public/uploads/blue-purple-paper-bags.jpg"
+          src="/uploads/blue-purple-paper-bags.jpg"
           alt="Collection"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
         />
