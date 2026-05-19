@@ -4,10 +4,20 @@
  */
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ShoppingCart, User, Scissors, Menu, X, LogOut, LayoutDashboard } from "lucide-react";
+import {
+  ShoppingCart,
+  User,
+  Scissors,
+  Menu,
+  X,
+  LogOut,
+  LayoutDashboard,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { useLoader } from "@/src/context/LoaderContext";
+import { nav } from "motion/react-client";
 
 interface NavbarProps {
   setIsCartOpen: (open: boolean) => void;
@@ -15,23 +25,25 @@ interface NavbarProps {
 
 export default function Navbar({ setIsCartOpen }: NavbarProps) {
   const location = useLocation();
-  const navigate  = useNavigate();
-  const { cart }  = useCart();
+  const navigate = useNavigate();
+  const { cart } = useCart();
   const { isAuthenticated, user, logout } = useAuth();
+  const { setIsLoading } = useLoader();
 
-  const [isProfileOpen,    setIsProfileOpen]    = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const closeMobile = () => setIsMobileMenuOpen(false);
 
+  console.log("result:", setIsCartOpen.toString());
+
   return (
     <>
       <nav className="sticky w-full top-0 z-50 bg-white/80 backdrop-blur-3xl border-b border-rose-100/80 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex justify-between h-16 sm:h-20 md:h-28 items-center">
-
             {/* ── Logo ── */}
             <Link
               to="/"
@@ -59,7 +71,6 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
 
             {/* ── Right controls ── */}
             <div className="flex items-center space-x-2 md:space-x-4">
-
               {/* Desktop nav pills */}
               <div className="hidden md:flex items-center bg-[#FFF9FA] p-1.5 rounded-2xl border border-rose-100 gap-1">
                 <Link
@@ -90,7 +101,10 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setIsCartOpen(true)}
+                onClick={() => {
+                  setIsCartOpen(true);
+                  if (location.pathname !== "/") navigate("/");
+                }}
                 className="relative bg-[#A3485E] h-10 w-10 sm:h-11 sm:w-11 md:h-14 md:w-14 flex items-center justify-center rounded-xl md:rounded-2xl shadow-xl shadow-[#A3485E]/10 cursor-pointer hover:bg-[#8C3B4E] transition-colors"
               >
                 <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 text-white" />
@@ -127,7 +141,10 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                 <AnimatePresence>
                   {isProfileOpen && (
                     <>
-                      <div className="fixed inset-0 z-10" onClick={() => setIsProfileOpen(false)} />
+                      <div
+                        className="fixed inset-0 z-10"
+                        onClick={() => setIsProfileOpen(false)}
+                      />
                       <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -136,24 +153,37 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                       >
                         {isAuthenticated ? (
                           <div className="px-5 py-2">
-                            <p className="text-[9px] font-black text-[#C6A4A9] uppercase tracking-widest mb-1">Account</p>
-                            <p className="text-xs font-bold truncate mb-3 text-[#4A3538]">{user?.email}</p>
+                            <p className="text-[9px] font-black text-[#C6A4A9] uppercase tracking-widest mb-1">
+                              Account
+                            </p>
+                            <p className="text-xs font-bold truncate mb-3 text-[#4A3538]">
+                              {user?.email}
+                            </p>
                             <button
-                              onClick={() => { navigate("/user/profile"); setIsProfileOpen(false); }}
+                              onClick={() => {
+                                navigate("/user/profile");
+                                setIsProfileOpen(false);
+                              }}
                               className="w-full text-left py-2 text-xs font-bold text-[#4A3538] hover:text-[#A3485E] hover:translate-x-1 transition-all"
                             >
                               Profile
                             </button>
                             {user?.role === "admin" && (
                               <button
-                                onClick={() => { navigate("/admin"); setIsProfileOpen(false); }}
+                                onClick={() => {
+                                  navigate("/admin");
+                                  setIsProfileOpen(false);
+                                }}
                                 className="w-full text-left py-2 text-xs font-bold text-[#A3485E] hover:translate-x-1 transition-all"
                               >
                                 Admin Management
                               </button>
                             )}
                             <button
-                              onClick={() => { logout(); setIsProfileOpen(false); }}
+                              onClick={() => {
+                                logout();
+                                setIsProfileOpen(false);
+                              }}
                               className="w-full text-left py-2 mt-1 border-t border-rose-50 pt-2 text-xs font-bold text-red-400 hover:translate-x-1 transition-transform"
                             >
                               Logout
@@ -162,13 +192,19 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                         ) : (
                           <div className="px-5 py-1">
                             <button
-                              onClick={() => { navigate("/user/login"); setIsProfileOpen(false); }}
+                              onClick={() => {
+                                navigate("/user/login");
+                                setIsProfileOpen(false);
+                              }}
                               className="w-full text-left py-2 text-xs font-bold text-[#4A3538] hover:text-[#A3485E] hover:translate-x-1 transition-all tracking-widest uppercase"
                             >
                               Login
                             </button>
                             <button
-                              onClick={() => { navigate("/user/register"); setIsProfileOpen(false); }}
+                              onClick={() => {
+                                navigate("/user/register");
+                                setIsProfileOpen(false);
+                              }}
                               className="w-full text-left py-2 text-xs font-bold text-[#4A3538] hover:text-[#A3485E] hover:translate-x-1 transition-all tracking-widest uppercase"
                             >
                               Register
@@ -192,8 +228,8 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                     <motion.span
                       key="close"
                       initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0,   opacity: 1 }}
-                      exit={{   rotate:  90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
                       transition={{ duration: 0.15 }}
                     >
                       <X className="w-5 h-5" />
@@ -201,9 +237,9 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                   ) : (
                     <motion.span
                       key="open"
-                      initial={{ rotate:  90, opacity: 0 }}
-                      animate={{ rotate: 0,   opacity: 1 }}
-                      exit={{   rotate: -90, opacity: 0 }}
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
                       transition={{ duration: 0.15 }}
                     >
                       <Menu className="w-5 h-5" />
@@ -248,9 +284,10 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                          shadow-[0_20px_50px_rgba(163,72,94,0.12)]
                          overflow-hidden"
             >
-              <div className="p-4 sm:p-5 flex flex-col gap-4 bg-[#FFF9FA]
-                              max-h-[calc(100vh-5rem)] overflow-y-auto">
-
+              <div
+                className="p-4 sm:p-5 flex flex-col gap-4 bg-[#FFF9FA]
+                              max-h-[calc(100vh-5rem)] overflow-y-auto"
+              >
                 {/* Navigation links */}
                 <div className="flex flex-col gap-1.5">
                   <span className="text-[9px] font-black tracking-widest uppercase text-[#C6A4A9] px-3">
@@ -297,9 +334,13 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                           {user?.email?.charAt(0).toUpperCase()}
                         </div>
                         <div className="flex flex-col min-w-0">
-                          <span className="text-xs font-bold text-[#4A3538] truncate">{user?.email}</span>
+                          <span className="text-xs font-bold text-[#4A3538] truncate">
+                            {user?.email}
+                          </span>
                           <span className="text-[9px] font-medium text-[#C6A4A9]">
-                            {user?.role === "admin" ? "Store Administrator" : "Authenticated Client"}
+                            {user?.role === "admin"
+                              ? "Store Administrator"
+                              : "Authenticated Client"}
                           </span>
                         </div>
                       </div>
@@ -307,7 +348,10 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                       {/* Action buttons */}
                       <div className="grid grid-cols-2 gap-2 pt-2 border-t border-rose-50">
                         <button
-                          onClick={() => { navigate("/user/profile"); closeMobile(); }}
+                          onClick={() => {
+                            navigate("/user/profile");
+                            closeMobile();
+                          }}
                           className="p-2.5 bg-[#FFF5F6] hover:bg-[#FFEBEF] text-[#A3485E]
                                      rounded-xl text-center text-xs font-bold transition-colors
                                      active:scale-95"
@@ -315,7 +359,10 @@ export default function Navbar({ setIsCartOpen }: NavbarProps) {
                           Profile
                         </button>
                         <button
-                          onClick={() => { logout(); closeMobile(); }}
+                          onClick={() => {
+                            logout();
+                            closeMobile();
+                          }}
                           className="p-2.5 bg-red-50 hover:bg-red-100 text-red-500
                                      rounded-xl text-center text-xs font-bold transition-colors
                                      flex items-center justify-center gap-1.5 active:scale-95"

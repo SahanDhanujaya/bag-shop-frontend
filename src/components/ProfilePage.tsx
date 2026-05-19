@@ -271,7 +271,7 @@ const ProfilePage = () => {
                           </span>
                         </div>
                         <span className="text-xs sm:text-sm font-black text-rose-950/70 italic shrink-0">
-                          Rs. {(item.price * item.quantity).toLocaleString()}
+                          LKR. {(item.price * item.quantity).toLocaleString()}
                         </span>
                       </div>
                     ))}
@@ -280,7 +280,7 @@ const ProfilePage = () => {
                     <div className="flex justify-between mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-rose-100 items-baseline gap-3">
                       <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-rose-950/40">Grand Tribute</span>
                       <span className="text-2xl sm:text-3xl font-display font-black tracking-tighter text-rose-950">
-                        Rs. {order.total.toLocaleString()}
+                        LKR. {order.total.toLocaleString()}
                       </span>
                     </div>
                   </div>

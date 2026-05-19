@@ -24,7 +24,7 @@ export default function Store({
   const { cart, addToCart, clearCart, total } = useCart();
   const navigate = useNavigate();
 
-  const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
+  const BASE_URL = process.env.BASE_URL;
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/bags`)
@@ -99,7 +99,7 @@ export default function Store({
                           rounded-2xl sm:rounded-3xl md:rounded-[3rem] lg:rounded-[4rem]
                           overflow-hidden group shadow-xl">
         <img
-          src="/uploads/blue-purple-paper-bags.jpg"
+          src="/uploads/Gemini_Generated_Image_q6c0maq6c0maq6c0.png"
           alt="Collection"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
         />
@@ -267,7 +267,7 @@ export default function Store({
                         </h3>
                         <span className="font-black text-xs sm:text-sm lg:text-base
                                          text-rose-600 block mt-0.5">
-                          ${bag.price}
+                          LKR.{bag.price}
                         </span>
                         {/* Description only on sm+ — too tight in 2-col mobile grid */}
                         <p className="hidden sm:block text-rose-700/50 text-[10px] sm:text-xs
@@ -325,7 +325,7 @@ export default function Store({
         setIsOpen={setIsCartOpen}
         orderStatus={orderStatus}
         onSubmitCheckout={handleCheckoutSubmit}
-        BASE_URL={BASE_URL}
+        BASE_URL={BASE_URL as unknown as string}
       />
     </div>
   );
