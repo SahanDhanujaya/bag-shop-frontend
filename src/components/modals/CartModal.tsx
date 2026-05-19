@@ -1,6 +1,14 @@
 import React, { FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, X, ArrowRight, ShoppingBasket, Truck, ShieldCheck } from "lucide-react";
+import {
+  Plus,
+  Minus,
+  X,
+  ArrowRight,
+  ShoppingBasket,
+  Truck,
+  ShieldCheck,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
@@ -52,13 +60,16 @@ export default function CartModal({
                   <ShoppingBasket className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-rose-950 text-base uppercase tracking-tight">Your Basket</h3>
+                  <h3 className="font-extrabold text-rose-950 text-base uppercase tracking-tight">
+                    Your Basket
+                  </h3>
                   <p className="text-[11px] font-semibold text-rose-400 uppercase tracking-wider">
-                    {cart.reduce((acc, item) => acc + item.quantity, 0)} items selected
+                    {cart.reduce((acc, item) => acc + item.quantity, 0)} items
+                    selected
                   </p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 text-rose-300 hover:text-rose-950 hover:bg-rose-50 rounded-full transition-all"
               >
@@ -75,13 +86,19 @@ export default function CartModal({
                     <div className="w-12 h-12 bg-rose-50/50 rounded-full flex items-center justify-center mb-3">
                       <ShoppingBasket className="w-6 h-6 text-rose-300" />
                     </div>
-                    <p className="text-sm font-medium text-rose-950">Your basket is currently empty.</p>
-                    <p className="text-xs text-rose-400 mt-1">Explore our catalog to add products.</p>
+                    <p className="text-sm font-medium text-rose-950">
+                      Your basket is currently empty.
+                    </p>
+                    <p className="text-xs text-rose-400 mt-1">
+                      Explore our catalog to add products.
+                    </p>
                   </div>
                 ) : (
                   <div className="bg-white border border-rose-100/60 rounded-3xl p-2 sm:p-4 divide-y divide-rose-50/60 shadow-sm">
                     <div className="flex justify-between items-center pb-3 px-2">
-                      <span className="text-[10px] font-bold text-rose-400 uppercase tracking-widest">Selected Pieces</span>
+                      <span className="text-[10px] font-bold text-rose-400 uppercase tracking-widest">
+                        Selected Pieces
+                      </span>
                       <button
                         onClick={clearCart}
                         className="text-[10px] font-bold text-rose-900 hover:shadow rounded-lg p-2 uppercase tracking-widest transition-colors"
@@ -91,11 +108,14 @@ export default function CartModal({
                     </div>
 
                     {cart.map((item) => (
-                      <div key={item.bagId} className="flex gap-4 py-4 first:pt-3 last:pb-2 px-1 sm:px-2 group relative">
+                      <div
+                        key={item.bagId}
+                        className="flex gap-4 py-4 first:pt-3 last:pb-2 px-1 sm:px-2 group relative"
+                      >
                         {/* Image Frame */}
                         <div className="w-20 h-24 bg-gradient-to-br from-rose-50/40 to-transparent rounded-2xl overflow-hidden flex-shrink-0 border border-rose-100/40 shadow-inner">
                           <img
-                            src={`${BASE_URL}${item.imageUrl}`}
+                            src={`${item.imageUrl}`} // ✅ Prepend BASE_URL to image path
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             alt={item.name}
                           />
@@ -110,14 +130,18 @@ export default function CartModal({
                               </h4>
                               <button
                                 type="button"
-                                onClick={() => updateQuantity(item.bagId, -item.quantity)}
+                                onClick={() =>
+                                  updateQuantity(item.bagId, -item.quantity)
+                                }
                                 className="p-1 text-rose-200 hover:text-rose-600 transition-colors flex-shrink-0"
                               >
                                 <X className="w-4 h-4" />
                               </button>
                             </div>
                             <div className="flex items-center gap-2 mt-1.5 text-[9px] text-rose-400 font-bold uppercase tracking-wider">
-                              <span className="bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded-md">Studio Piece</span>
+                              <span className="bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded-md">
+                                Studio Piece
+                              </span>
                               <span className="flex items-center gap-0.5 text-emerald-600">
                                 <Truck className="w-3 h-3" /> 3-Day Delivery
                               </span>
@@ -127,9 +151,13 @@ export default function CartModal({
                           {/* Controls Row */}
                           <div className="flex justify-between items-center mt-3">
                             <span className="font-black text-rose-950 text-sm sm:text-base">
-                              Rs. {(item.price * item.quantity).toLocaleString("en-LK", { minimumFractionDigits: 2 })}
+                              Rs.{" "}
+                              {(item.price * item.quantity).toLocaleString(
+                                "en-LK",
+                                { minimumFractionDigits: 2 },
+                              )}
                             </span>
-                            
+
                             <div className="flex items-center border border-rose-100 rounded-xl bg-white shadow-sm overflow-hidden">
                               <button
                                 type="button"
@@ -166,17 +194,27 @@ export default function CartModal({
                   <div className="flex justify-between font-semibold text-rose-700/80 uppercase tracking-wider">
                     <span>Items Subtotal</span>
                     <span className="text-rose-950 font-bold">
-                      Rs. {total.toLocaleString("en-LK", { minimumFractionDigits: 2 })}
+                      Rs.{" "}
+                      {total.toLocaleString("en-LK", {
+                        minimumFractionDigits: 2,
+                      })}
                     </span>
                   </div>
                   <div className="flex justify-between font-semibold text-rose-700/80 uppercase tracking-wider">
                     <span>Shipping Fee</span>
-                    <span className="text-emerald-600 font-bold uppercase tracking-wide">Free Delivery</span>
+                    <span className="text-emerald-600 font-bold uppercase tracking-wide">
+                      Free Delivery
+                    </span>
                   </div>
                   <div className="pt-3 border-t border-rose-50 flex justify-between items-baseline">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-rose-400">Estimated Total</span>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-rose-400">
+                      Estimated Total
+                    </span>
                     <span className="text-2xl font-black text-rose-950">
-                      Rs. {total.toLocaleString("en-LK", { minimumFractionDigits: 2 })}
+                      Rs.{" "}
+                      {total.toLocaleString("en-LK", {
+                        minimumFractionDigits: 2,
+                      })}
                     </span>
                   </div>
                 </div>
@@ -188,7 +226,10 @@ export default function CartModal({
                   <h5 className="text-[10px] font-black uppercase tracking-[0.2em] px-1 text-rose-400">
                     Shipping Assignment
                   </h5>
-                  <form onSubmit={onSubmitCheckout} className="space-y-3 bg-white border border-rose-100/60 rounded-3xl p-5 shadow-sm">
+                  <form
+                    onSubmit={onSubmitCheckout}
+                    className="space-y-3 bg-white border border-rose-100/60 rounded-3xl p-5 shadow-sm"
+                  >
                     <div>
                       <input
                         name="name"
@@ -235,7 +276,9 @@ export default function CartModal({
                           disabled={orderStatus === "submitting"}
                           className="w-full py-4 bg-rose-950 text-white rounded-2xl font-extrabold uppercase text-[11px] tracking-widest hover:bg-rose-900 disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-md"
                         >
-                          {orderStatus === "submitting" ? "Securing Order..." : "Confirm & Place Order"}
+                          {orderStatus === "submitting"
+                            ? "Securing Order..."
+                            : "Confirm & Place Order"}
                           <ArrowRight className="w-4 h-4" />
                         </button>
                       )}
@@ -248,7 +291,8 @@ export default function CartModal({
             {/* Premium Guarantee Footer */}
             <div className="p-4 bg-white border-t border-rose-100/60 flex items-center justify-center gap-6 text-[10px] font-bold text-rose-400 uppercase tracking-wider flex-shrink-0">
               <span className="flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Secure SSL Checkout
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Secure
+                SSL Checkout
               </span>
               <span>•</span>
               <span>Original Craftwork</span>

@@ -16,6 +16,7 @@ import {
   Check,
 } from "lucide-react";
 import { Bag } from "../types.ts";
+import { useCart } from "../context/CartContext";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -23,8 +24,8 @@ export default function ProductDetail() {
   const [bag, setBag] = useState<Bag | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const { addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false);
-
   // BASE_URL is only used for API calls — NOT for image src (images are full URLs)
   const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 
@@ -49,28 +50,7 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     if (!bag) return;
-
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const bagId = bag._id || (bag as any).id;
-    const existing = cart.find((item: any) => item.bagId === bagId);
-    // images are already full URLs — use directly
-    const images = Array.isArray(bag.image) ? bag.image : [bag.image];
-
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({
-        bagId,
-        name: bag.name,
-        price: bag.price,
-        quantity: 1,
-        imageUrl: images[0], // full URL — no prefix needed
-      });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    window.dispatchEvent(new Event("cart-updated"));
-
+    addToCart(bag); // same call Store.tsx makes
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
   };
@@ -168,7 +148,7 @@ export default function ProductDetail() {
             </h1>
 
             <p className="text-xl md:text-2xl font-black text-rose-600">
-              Rs.{" "}
+              LKR.{" "}
               {bag.price.toLocaleString("en-LK", { minimumFractionDigits: 2 })}
             </p>
           </div>

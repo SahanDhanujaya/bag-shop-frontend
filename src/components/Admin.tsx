@@ -235,7 +235,7 @@ export default function Admin() {
               <div className="bg-rose-50 px-4 py-3 sm:p-5 lg:p-6 rounded-xl sm:rounded-2xl lg:rounded-[2rem] flex flex-col items-center justify-center min-w-[80px] sm:min-w-[110px] lg:min-w-[140px] border border-rose-100">
                 <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-rose-500 mb-1 sm:mb-2" />
                 <p className="text-[9px] sm:text-[10px] uppercase font-black tracking-widest text-rose-950/50">Revenue</p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-display font-black text-rose-950">${totalRevenue}</p>
+                <p className="text-lg sm:text-xl lg:text-2xl font-display font-black text-rose-950">LKR.{totalRevenue}</p>
               </div>
               <div className="bg-rose-100/50 px-4 py-3 sm:p-5 lg:p-6 rounded-xl sm:rounded-2xl lg:rounded-[2rem] flex flex-col items-center justify-center min-w-[80px] sm:min-w-[110px] lg:min-w-[140px] border border-rose-200/50">
                 <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-rose-600 mb-1 sm:mb-2" />
@@ -328,7 +328,7 @@ export default function Admin() {
                         <span>Supply: {bag.quantity} units</span>
                       </div>
                     </div>
-                    <span className="text-xl sm:text-2xl font-display font-black text-rose-500 shrink-0">${bag.price}</span>
+                    <span className="text-xl sm:text-2xl font-display font-black text-rose-500 shrink-0">LKR.{bag.price}</span>
                   </div>
                   <div className="flex justify-end space-x-2 sm:space-x-3 pt-4 sm:pt-6 border-t border-rose-50">
                     <button
@@ -407,7 +407,7 @@ export default function Admin() {
                         <p className="text-xs text-rose-950/40 font-medium truncate">{order.email}</p>
                       </div>
                       <div className="flex flex-col items-end gap-1.5 shrink-0">
-                        <span className="font-display font-black text-rose-950 text-lg">${order.total}</span>
+                        <span className="font-display font-black text-rose-950 text-lg">LKR.{order.total}</span>
                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${statusClass(order.status)}`}>
                           {order.status}
                         </span>
@@ -460,7 +460,7 @@ export default function Admin() {
                                     <span className="bg-rose-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-lg shrink-0">x{item.quantity}</span>
                                     <span className="font-bold text-rose-950 text-xs truncate">{item.name}</span>
                                   </div>
-                                  <span className="text-rose-950/50 font-black text-xs shrink-0 ml-2">${item.price * item.quantity}</span>
+                                  <span className="text-rose-950/50 font-black text-xs shrink-0 ml-2">LKR.{item.price * item.quantity}</span>
                                 </div>
                               ))}
                             </div>
@@ -507,7 +507,7 @@ export default function Admin() {
                             </div>
                           </td>
                           <td className="px-5 lg:px-8 py-5 lg:py-6">
-                            <span className="font-display font-black text-rose-950 text-lg">${order.total}</span>
+                            <span className="font-display font-black text-rose-950 text-lg">LKR.{order.total}</span>
                           </td>
                           <td className="px-5 lg:px-8 py-5 lg:py-6">
                             <span className={`px-3 lg:px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${statusClass(order.status)}`}>
@@ -546,7 +546,7 @@ export default function Admin() {
                                         <span className="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-lg shrink-0">x{item.quantity}</span>
                                         <span className="font-bold text-rose-950 text-sm truncate">{item.name}</span>
                                       </div>
-                                      <span className="text-rose-950/50 font-black text-xs shrink-0 ml-2">${item.price * item.quantity}</span>
+                                      <span className="text-rose-950/50 font-black text-xs shrink-0 ml-2">LKR.{item.price * item.quantity}</span>
                                     </div>
                                   ))}
                                 </div>
@@ -767,7 +767,7 @@ export default function Admin() {
                 <div className="grid grid-cols-2 gap-3 sm:gap-6">
                   <div>
                     <label className="block text-[10px] font-black uppercase tracking-widest text-rose-500 mb-2 sm:mb-3 ml-1">
-                      Price ($)
+                      Price (LKR)
                     </label>
                     <input
                       name="price"
