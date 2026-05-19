@@ -5,10 +5,8 @@ const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 const login = (loginCredintials: LoginCredintials) => {
     return fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        // credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(loginCredintials),
     });
 };
@@ -26,9 +24,8 @@ const register = (credintials: LoginCredintials) => {
 const logout = () => {
     return fetch(`${BASE_URL}/api/auth/logout`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
     });
-}
+};
 export { login, register, logout };
