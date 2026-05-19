@@ -23,6 +23,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { Bag, Order } from "../types";
+import { useLoader } from "../context/LoaderContext";
 
 // ─── Multi-image helper types ──────────────────────────────────────────────
 interface ImageEntry {
@@ -78,6 +79,7 @@ export default function Admin() {
   const [orderCurrentPage, setOrderCurrentPage] = useState(1);
   const ordersPerPage = 5;
   const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
+  const { setIsLoading } = useLoader();
 
   const { onDragStart, onDragOver, onDragEnd } = useDragReorder(images, setImages);
 
@@ -94,7 +96,7 @@ export default function Admin() {
       if (ordersRes.ok) setOrders(await ordersRes.json());
     } catch (err) {
       console.error("Error fetching data:", err);
-    }
+    } 
   };
 
   const openNewForm = () => { setEditingBag(null); setImages([]); setIsFormOpen(true); };
@@ -141,6 +143,7 @@ export default function Admin() {
   };
 
   const handleBagSubmit = async (e: FormEvent) => {
+    setIsLoading(true);
     e.preventDefault();
     if (images.length === 0) { alert("Please add at least one image."); return; }
 
@@ -165,17 +168,20 @@ export default function Admin() {
       console.error("Submission failed", err);
     } finally {
       setIsUploading(false);
+      setIsLoading(false);
     }
   };
 
   const deleteBag = async (id: string) => {
     if (confirm("Are you sure you want to delete this bag?")) {
+      setIsLoading(true);
       await fetch(`${BASE_URL}/api/bags/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
       fetchData();
+      setIsLoading(false);
     }
   };
 
@@ -618,7 +624,7 @@ export default function Admin() {
       {isFormOpen && (
         <>
           <div
-            className="fixed inset-0 bg-rose-950/20 backdrop-blur-xl z-[100]"
+            className="fixed h-full inset-0 bg-rose-950/20 backdrop-blur-xl z-[100]"
             onClick={closeForm}
           />
           <motion.div
