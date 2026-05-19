@@ -1,0 +1,72 @@
+{
+  "bags": [
+    {
+      "name": "Kavindu",
+      "price": 122,
+      "description": "dddd",
+      "imageUrl": "/uploads/1777995130731-ChatGPT Image Apr 26, 2026, 12_14_07 AM.png",
+      "category": "Classic",
+      "stock": 12,
+      "id": "1777995131211"
+    }
+  ],
+  "orders": [
+    {
+      "customerName": "Kavindu Thilan",
+      "email": "kavinduthilan4@gmail.com",
+      "address": "rassagala,balangoda",
+      "items": [
+        {
+          "bagId": "1777405538994",
+          "name": "customer",
+          "price": 120,
+          "quantity": 1,
+          "imageUrl": "/uploads/1777405538974-banner2.jpg.jpeg"
+        }
+      ],
+      "total": 120,
+      "id": "1777405557152",
+      "status": "shipped",
+      "createdAt": "2026-04-28T19:45:57.152Z"
+    },
+    {
+      "customerName": "Sahan Dhanujaya Ekanayaka",
+      "email": "sahandhanujaya18@gmial.com",
+      "address": "116/1 ,\nMorahenagama,",
+      "items": [
+        {
+          "bagId": "1777995131211",
+          "name": "Kavindu",
+          "price": 122,
+          "quantity": 1,
+          "imageUrl": "/uploads/1777995130731-ChatGPT Image Apr 26, 2026, 12_14_07 AM.png"
+        }
+      ],
+      "total": 122,
+      "id": "1777995163571",
+      "status": "delivered",
+      "createdAt": "2026-05-05T15:32:43.571Z"
+    },
+    {
+      "customerName": "Sahan Dhanujaya Ekanayaka",
+      "email": "sahandhanujaya18@gmial.com",
+      "address": "116/1 ,\nMorahenagama,",
+      "items": [
+        {
+          "bagId": "69fb40685683c120aea2d6df",
+          "name": "example bag",
+          "price": 1000,
+          "quantity": 2,
+          "imageUrl": [
+            "/uploads/1778073733866-ChatGPT Image Apr 6, 2026, 09_50_42 PM.png",
+            "/uploads/1778073733878-ChatGPT Image Apr 26, 2026, 12_14_07 AM.png"
+          ]
+        }
+      ],
+      "total": 2000,
+      "id": "1778075988795",
+      "status": "pending",
+      "createdAt": "2026-05-06T13:59:48.795Z"
+    }
+  ]
+}
