@@ -12,7 +12,7 @@ const Register = () => {
     email: "",
     password: "",
     address: "",
-    role: "admin",
+    role: "customer",
   });
   const { setIsLoading } = useLoader();
   const navigate = useNavigate();
